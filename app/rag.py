@@ -14,7 +14,7 @@ from app.schemas.chat_schema import AskRequest
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/shawon/builder/chain-llm/erp_ai_agent/vertexai_service_key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/shawon/builder/chain-llm/erp-ai-agent-backup/erp-ai-agent/vertexai_service_key.json"
 
 PROJECT_ID = "innate-node-453604-g7"
 vertexai.init(project=PROJECT_ID, location="us-central1")
@@ -63,7 +63,7 @@ def search_vector(query: str) -> Dict[str, Any]:
         select text, dot_product(vector, JSON_ARRAY_PACK(%s)) as score
         from textVector
         order by score desc
-        limit 7;
+        limit 4;
         '''
 
         logger.info("Attempting to connect to SingleStore for search")

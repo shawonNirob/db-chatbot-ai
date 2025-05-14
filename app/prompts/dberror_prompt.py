@@ -1,5 +1,4 @@
 from langchain.prompts import PromptTemplate
-from app.chains.memory_chain import memory
 
 error_prompt = PromptTemplate( input_variable=["chat_history", "error"], template="""
     Conversation so far:

@@ -1,55 +1,60 @@
 from fastapi import HTTPException
-from app.llm.get_llm import get_llm_response
 from loguru import logger
 from app.schemas.process_schema import LLMAction
 from app.crud.db_crud import crud_operation
+from typing import Dict, Any
+import logging
+from sqlalchemy.orm import Session
 
-def sql_processor(data: LLMAction) -> dict:
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def sql_processor(db: Session, data: LLMAction) -> Dict[str, Any]:
     try:
+        logger.info(f"Received LLMAction: {data}")
         action = data.action
         content = data.content
 
+        logger.info(f"Action: {action}")
+        logger.info(f"Content: {content}")
+
         if action == "singleSQL":
-            result = crud_operation(content)
+            logger.info("Processing singleSQL action")
+            result = crud_operation(db, content)
+            logger.info(f"Result from singleSQL: {result}")
             return result
 
         elif action == "multipleSQL":
+            logger.info("Processing multipleSQL action")
             if isinstance(content, list):
                 results = []
                 for sql in content:
-                    result = crud_operation(sql)
+                    logger.info(f"Executing SQL: {sql}")
+                    result = crud_operation(db, sql)
+                    logger.info(f"Result for SQL: {result}")
                     results.append(result)
+                logger.info(f"All results from multipleSQL: {results}")
                 return results
 
             elif isinstance(content, str):
-                result = crud_operation(content)
+                logger.info(f"Content is string, executing single SQL from multipleSQL action: {content}")
+                result = crud_operation(db, content)
+                logger.info(f"Result: {result}")
                 return result
 
         elif action == "question":
+            logger.info("Processing question action")
             return {"action": "question", "content": content}
 
         elif action == "logic":
+            logger.info("Processing logic action")
             return {"action": "logic", "content": content}
 
         else:
+            logger.warning(f"Unknown action received: {action}")
             return {"error": "Unknown action in LLM response"}
 
     except Exception as e:
         logger.error(f"LLM processing failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"LLM Response Processing failed: {str(e)}")
-
-
-# if operation == "select":
-#     data = run_sql(sql)
-#     return response_chain.run(question=user_query, data=data)
-
-# elif operation in ["insert", "update", "delete"]:
-#     run_sql(sql)
-#     return f"{operation.upper()} operation completed successfully."
-
-# elif operation == "create":
-#     run_sql(sql)
-#     return "Table or object created successfully."
-
-# else:
-#     return "Unsupported SQL operation or invalid syntax."

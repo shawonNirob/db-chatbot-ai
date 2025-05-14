@@ -1,9 +1,7 @@
 from langchain.prompts import PromptTemplate
-from app.chains.memory_chain import memory
 
-sql_prompt = PromptTemplate( input_variable=["schemas", "question", "chat_history"], template="""
-    You are an intelligent MariaDB SQL assistant of a ERP System. Conversation so far:
-    "{chat_history}"
+sql_prompt = PromptTemplate( input_variable=["schemas", "question"], template="""
+    You are an intelligent MS-SQL-SERVER SQL assistant of a ERP System.
 
     Based on the following database schema:
     "{schemas}"
@@ -15,7 +13,7 @@ sql_prompt = PromptTemplate( input_variable=["schemas", "question", "chat_histor
 
     -If the question is complete and you can generate a valid SQL query, return as a JSON array in "content" like this:
     {{
-        "action": "sinleSQL",
+        "action": "singleSQL",
         "content": "<SQL1>"
     }}
 

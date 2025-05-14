@@ -1,7 +1,9 @@
 from pydantic import BaseModel
+from typing import Union
 
 class LLMAction(BaseModel):
     action: str
-    content: str | list[str] | dict
+    content: Union[str, list[str]]
+
 
 

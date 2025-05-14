@@ -2,6 +2,8 @@ fastapi
 uvicorn
 openai
 langchain
+langchain-community
+langchain-openai
 sqlparse
 faiss-cpu #chromaDB
 singlestoredb #singlestoreDB
@@ -16,3 +18,4 @@ google-cloud-aiplatform
 protobuf #Used under the hood by Google APIs
 vertexai
 pyodbc
+langchain_core

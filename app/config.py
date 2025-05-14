@@ -3,7 +3,7 @@ from typing import Optional
 
 class Settings(BaseSettings):
     DATABASE_URL: str
-    API_KEY: str
+    OPENAI_API_KEY: str
     MODEL_ID: str
     S2_STRING: str
 

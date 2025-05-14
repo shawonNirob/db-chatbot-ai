@@ -29,7 +29,7 @@ var/
 /env_activate.txt
 
 # Ignore all files in the erp-venv directory
-erp-venv/*
+erp-venv/
 
 
 

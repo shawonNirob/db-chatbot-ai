@@ -1,12 +1,11 @@
 from langchain.prompts import PromptTemplate
-from app.chains.memory_chain import memory
 
-resp_prompt = PromptTemplate( input_variable=["dtabase_returned", "chat_history"], template="""
-    Conversation so far:
-    "{chat_history}"
+resp_prompt = PromptTemplate( input_variable=["question", "database_returned"], template="""
+    User Query:
+    "{question}"
 
     Database returned:
-    "{dtabase_returned}"
+    "{database_returned}"
 
     Respond ONLY in this JSON format:
 
