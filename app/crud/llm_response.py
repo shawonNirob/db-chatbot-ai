@@ -57,4 +57,4 @@ def sql_processor(db: Session, data: LLMAction) -> Dict[str, Any]:
 
     except Exception as e:
         logger.error(f"LLM processing failed: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"LLM Response Processing failed: {str(e)}")
+        return {"success": False, "message": f"LLM response is not sructured for proceess: {str(e)}"}

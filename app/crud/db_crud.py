@@ -37,22 +37,19 @@ def crud_operation(db: Session, query: str) -> Dict[str, Any]:
             db.commit()
             return {"message": "Database operation successfull"}
 
-        elif operation == "create":
-            return {"message": "Table of object is not permit to create"}
+        elif operation in ["create", "drop", "alter", "truncate"]:
+            return {"message": "Table of object is not permit"}
 
         else:
             return {"message": "Unsupported SQL operation or invalid syntax."}
 
 
     except IntegrityError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Duplicate entry detected"
-        )
+        logger.warning("Duplicate entry detected")
+        return {"success": False, "message": "The item already exists."}
     
 
     except Exception as e:
         logger.error(f"Database Operation Failed: {str(e)}")
         db.rollback()
-        raise HTTPException(status_code=500, detail=f"Database Operation Failed: {str(e)}")
-
+        return {"success": False, "message": f"Something went wrong into sql operation with database. {str(e)}"}

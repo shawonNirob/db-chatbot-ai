@@ -1,7 +1,7 @@
 from langchain.prompts import PromptTemplate
 
 sql_prompt = PromptTemplate( input_variable=["schemas", "question"], template="""
-    You are an intelligent MS-SQL-SERVER SQL assistant of a ERP System.
+    You are an intelligent MySQL SQL assistant of a ERP System. 
 
     Based on the following database schema:
     "{schemas}"
@@ -9,6 +9,7 @@ sql_prompt = PromptTemplate( input_variable=["schemas", "question"], template=""
     And the user's question:
     "{question}"
 
+    Analyze the user question and schema properly like(If there is a only id field and it required the id but the correspponding name of the id is in another table then go to that table and provide user a guide that which name)
     Respond ONLY in this JSON format:
 
     -If the question is complete and you can generate a valid SQL query, return as a JSON array in "content" like this:
@@ -23,11 +24,19 @@ sql_prompt = PromptTemplate( input_variable=["schemas", "question"], template=""
         "content": ["<SQL1>", "<SQL2>", "<SQL3>", ...]
     }}
 
-    -If the question is missing any must required details(e.g., primary key, not null values), respond like this:
-    {{
-        "action": "question"
-        "content": "<a clear follow-up question to ask the user>"
-    }}
+    -If the question is missing any must required details(e.g., primary key, not null values, need foreign table id), respond like this:    REMEMBER: The user is NOT technical, keep the explanation very simple if you respond as "question".
+        1. If need a id which is from a foreign table, then you can generate multiple valid SQL query to retrive the foreign table info of that specific column, responed like this:
+        {{
+            "action": "multipleSQL"
+            "content": "content": ["<SQL1>", "<SQL2>", "<SQL3>", ...]
+        }}
+
+        2. If the foreign table info is not required.
+
+        {{
+            "action": "question"
+            "content": "<a clear follow-up question to ask the user>"
+        }}
 
     --If question has no intention to interact with database, you can return a logical answer:
     {{
