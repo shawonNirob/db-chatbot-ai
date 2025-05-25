@@ -1,1 +1,1 @@
-#ERP AI Agent
+# An intelligent chatbot that interacts with databases using natural language, powered by LLM.
