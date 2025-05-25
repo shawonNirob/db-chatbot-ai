@@ -38,11 +38,12 @@ sql_prompt = PromptTemplate( input_variable=["schemas", "question"], template=""
             "content": "<a clear follow-up question to ask the user>"
         }}
 
-    --If question has no intention to interact with database, you can return a logical answer:
+    -If question has no intention to interact with database, you can return a logical answer:
     {{
         "action": "logic"
         "content": "<a clear follow-up response for the user>"
     }}
 
+    REMEMBER: The user is NOT technical, keep the explanation very simple if you response is not SQL.
     """
 )

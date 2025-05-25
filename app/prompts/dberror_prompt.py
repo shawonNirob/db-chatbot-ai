@@ -22,7 +22,7 @@ error_prompt = PromptTemplate( input_variable=["query", "schemas", "response", "
     1. If the error is related to an incorrect SQL query:
         - Try to re-generate the correct query:
 
-        -If you can generate a valid SQL query, return as a JSON array in "content" like this:
+        - If you can generate a valid SQL query, return as a JSON array in "content" like this:
         {{
             "action": "singleSQL",
             "content": "<SQL1>"
@@ -35,9 +35,7 @@ error_prompt = PromptTemplate( input_variable=["query", "schemas", "response", "
         }}
     
     2. If the error is not about wrong SQL:
-        - Explain the issue in plain, simple language.
-        - Ask for more information from the user if needed.
-        - Respond like this:
+        -You can explain the issue in plain, simple language, ask for more information from the user if needed, respond like this:
         {{
             "action": "response",
             "content": "<a clear explanation and/or request for clarification>"

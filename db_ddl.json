@@ -1,0 +1,64 @@
+        
+        {
+            "tables": [
+                {
+                    "name": "departments",
+                    "columns": [
+                        {"name": "department_id", "type": "INT", "constraints": ["PRIMARY KEY"]},
+                        {"name": "department_name", "type": "VARCHAR(100)"}
+                    ]
+                },
+                {
+                    "name": "employees",
+                    "columns": [
+                        {"name": "emp_id", "type": "INT", "constraints": ["PRIMARY KEY"]},
+                        {"name": "name", "type": "VARCHAR(100)"},
+                        {"name": "department_id", "type": "INT", "constraints": ["FOREIGN KEY"]},
+                        {"name": "salary", "type": "DECIMAL(10,2)"},
+                        {"name": "hire_date", "type": "DATE"},
+                        {"name": "version", "type": "INT", "constraints": ["NOT NULL"], "default": "1"},
+                        {"name": "created_at", "type": "DATETIME", "default": "CURRENT_TIMESTAMP"},
+                        {"name": "updated_at", "type": "DATETIME", "default": "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"}
+                    ],
+                    "foreign_keys": [
+                        {"column": "department_id", "references": {"table": "departments", "column": "department_id"}}
+                    ]
+                },
+                {
+                    "name": "projects",
+                    "columns": [
+                        {"name": "project_id", "type": "INT", "constraints": ["PRIMARY KEY"]},
+                        {"name": "project_name", "type": "VARCHAR(100)"},
+                        {"name": "starting_date", "type": "DATE"},
+                        {"name": "end_date", "type": "DATE"}
+                    ]
+                },
+                {
+                    "name": "employee_projects",
+                    "columns": [
+                        {"name": "emp_id", "type": "INT", "constraints": ["PRIMARY KEY"]},
+                        {"name": "project_id", "type": "INT", "constraints": ["PRIMARY KEY"]},
+                        {"name": "role", "type": "VARCHAR(50)"}
+                    ],
+                    "foreign_keys": [
+                        {"column": "emp_id", "references": {"table": "employees", "column": "emp_id"}},
+                        {"column": "project_id", "references": {"table": "projects", "column": "project_id"}}
+                    ]
+                },
+                {
+                    "name": "audit_employees",
+                    "columns": [
+                        {"name": "log_id", "type": "INT", "constraints": ["PRIMARY KEY", "AUTO_INCREMENT"]},
+                        {"name": "emp_id", "type": "INT"},
+                        {"name": "name", "type": "VARCHAR(100)"},
+                        {"name": "department_id", "type": "INT"},
+                        {"name": "salary", "type": "DECIMAL(10,2)"},
+                        {"name": "hire_date", "type": "DATE"},
+                        {"name": "version", "type": "INT"},
+                        {"name": "created_at", "type": "DATETIME"},
+                        {"name": "updated_at", "type": "DATETIME"},
+                        {"name": "audit_time", "type": "DATETIME", "default": "CURRENT_TIMESTAMP"}
+                    ]
+                }
+            ]
+        }

@@ -13,6 +13,7 @@ llm = ChatOpenAI(model_name=settings.MODEL_ID, temperature=0.7)
 
 #return_messages=True: Instead of returning the chat history as a plain string, 
 #it returns a list of HumanMessage and AIMessage objects
+
 #memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
 sql_chain = sql_prompt | llm
