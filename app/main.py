@@ -22,7 +22,7 @@ app.include_router(vector_router, prefix="/vector", tags=["vector"])
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to ERP AI Agent"}
+    return {"message": "Welcome to Database AI Agent"}
 
 @app.get("/_status")
 def read_status():

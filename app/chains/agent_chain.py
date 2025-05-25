@@ -58,7 +58,7 @@ def vector_search(db: Session, query: str) -> Dict[str, Any]:
         schema = search_vector(query)
         
         
-        logger.info(f"Found {len(schema['tables'])} tables in schema")
+        logger.info(f"Found {len(schema)} schema")
 
         logger.info("Sending schema to the llm as a sql_prompt")
 
