@@ -27,4 +27,4 @@ def ask(request: AskRequest, db=Depends(get_db)) -> Dict[str, Any]:
 
 @router.post("/reset")
 def reset_memory():
-    memory.clear()
+    return{"development is not finish yet"}
